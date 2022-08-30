@@ -36,6 +36,7 @@ function Update() {
           id="outlined-basic"
           label="NAME"
           variant="outlined"
+          required="Required"
           onChange={(event) => setName(event.target.value)}
         />
         <br />
@@ -45,6 +46,7 @@ function Update() {
           id="outlined-basic"
           label="BATCH"
           variant="outlined"
+          required="Required"
           onChange={(event) => setBatch(event.target.value)}
         />
         <br />
@@ -54,6 +56,7 @@ function Update() {
           id="outlined-basic"
           label="COURSE"
           variant="outlined"
+          required="Required"
           onChange={(event) => setCourse(event.target.value)}
         />
         <br />
@@ -62,6 +65,7 @@ function Update() {
           id="outlined-basic"
           label="MENTOR"
           variant="outlined"
+          required="Required"
           onChange={(event) => setMentor(event.target.value)}
         />
         <br />
@@ -74,6 +78,7 @@ function Update() {
                 method:'PUT',
                 body:JSON.stringify({
                   Name:name,
+                  Batch:batch,
                   Course:course,
                   Mentor:mentor
                 }),

@@ -1,86 +1,156 @@
-import React, { useState } from "react";
+import React from "react";
 import "./Create.css";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-// import { Form } from "formik";
-// import { useFormik } from "formik";
+import { useFormik } from "formik";
+import * as yup from "yup";
+import axios from "axios";
+
+
+
+
+// const formVlidationSchema = yup.object({
+//   name: yup.string().max(15).required("Name is compulsory"),
+//   batch: yup.number().required("Batch is compulsory"),
+//   course: yup.string().required("Course is compulsory"),
+//   mentor : yup.string().max(15).required("Mentor is compulsory")
+// });
 
 function Create() {
-  // const [id,setId]=useState("");
-  const [name, setName] = useState("");
-  const [batch, setBatch] = useState("");
-  const [course, setCourse] = useState("");
-  const [mentor, setMentor] = useState("");
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
-  // useformik takes an object in that it can take many values
 
-  // const formik = useFormik({
-  //   initialValues: { name: "", batch: "", course: "", mentor: "" },
-  // });
+  const handleSubmit =async(value)=>{
+        await axios.post("https://62ac315ebd0e5d29af1cc1c8.mockapi.io/students",value)
+        navigate("/")
+  }
+
+
+
+  const formik =useFormik({
+    initialValues:{
+        Name:"",
+        Batch:"",
+        Course:"",
+        Mentor:"",
+    },
+    validationSchema:yup.object({
+      Name: yup.string().max(15).required("Name is compulsory"),
+        Batch: yup.number().required("Batch is compulsory"),
+        Course: yup.string().required("Course is compulsory"),
+        Mentor : yup.string().max(15).required("Mentor is compulsory")
+      
+    }),
+    onSubmit:(values)=>{
+      console.log(values)
+      handleSubmit(values)
+    }
+  })
+
+
+//   const navigate = useNavigate();
+
+//   const addData=(value)=>{
+//     fetch(`https://62ac315ebd0e5d29af1cc1c8.mockapi.io/students`, {
+//               method: "POST",
+//               body: JSON.stringify(value),
+//               headers: {
+//                 "Content-Type": "application/json",
+//               },
+//             }).then((response) => response.json());
+
+//             navigate("/");
+//   }
+
+//   const formik = useFormik({
+//     initialValues: { name: "", batch: "", course: "", mentor: "" },
+//     validationSchema:formVlidationSchema,
+//     onSubmit: (values) => {
+//       console.log(values)
+//       addData(values)
+//     },
+//   });
 
   return (
     <div>
-     {/* <Form> */}
-      <div className="inputs">
+      <form onSubmit={formik.handleSubmit} className="inputs">
+        {/* <Form> */}
+        {/* <div className="inputs"> */}
         <TextField
-          // value={formik.values.name}
+          value={formik.values.Name}
+          name="Name"
           id="outlined-basic"
           label="NAME"
           variant="outlined"
-          onChange={(event) => setName(event.target.value)}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          helperText= { formik.touched.Name && formik.errors.Name ? formik.errors.Name : ""}
         />
+        
         <br />
         <TextField
-          // value={formik.values.batch}
+          value={formik.values.Batch}
+          name="Batch"
           id="outlined-basic"
           label="BATCH"
           variant="outlined"
-          onChange={(event) => setBatch(event.target.value)}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          helperText=  { formik.touched.Batch && formik.errors.Batch ? formik.errors.Batch : ""}
         />
+       
         <br />
         <TextField
-          // value={formik.values.course}
+          value={formik.values.Course}
+          name="Course"
           id="outlined-basic"
           label="COURSE"
           variant="outlined"
-          onChange={(event) => setCourse(event.target.value)}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          helperText= { formik.touched.Course && formik.errors.Course ? formik.errors.Course : ""}
         />
+        
         <br />
         <TextField
-          // values={formik.values.mentor}
+          value={formik.values.Mentor}
+          name="Mentor"
           id="outlined-basic"
           label="MENTOR"
           variant="outlined"
-          onChange={(event) => setMentor(event.target.value)}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          helperText={ formik.touched.Mentor && formik.errors.Mentor ? formik.errors.Mentor : ""}
         />
+         
         <br />
 
         <Button
+          type="submit"
           variant="contained"
-          onClick={() => {
-            fetch(`https://62ac315ebd0e5d29af1cc1c8.mockapi.io/students`, {
-              method: "POST",
-              body: JSON.stringify({
-                Name: name,
-                Batch: batch,
-                Course: course,
-                Mentor: mentor,
-              }),
-              headers: {
-                "Content-Type": "application/json",
-              },
-            }).then((response) => response.json());
+          // onClick={() => {
+          //   fetch(`https://62ac315ebd0e5d29af1cc1c8.mockapi.io/students`, {
+          //     method: "POST",
+          //     body: JSON.stringify({
+          //       Name: name,
+          //       Batch: batch,
+          //       Course: course,
+          //       Mentor: mentor,
+          //     }),
+          //     headers: {
+          //       "Content-Type": "application/json",
+          //     },
+          //   }).then((response) => response.json());
 
-            navigate("/");
-          }}
+          //   navigate("/");
+          // }}
         >
           SUBMIT
         </Button>
-      </div>
+      </form>
       <Button
         style={{ margin: "5%" }}
         variant="outlined"
@@ -91,7 +161,7 @@ function Create() {
       >
         BACK
       </Button>
-     {/* </Form> */}
+      {/* </Form> */}
     </div>
   );
 }
