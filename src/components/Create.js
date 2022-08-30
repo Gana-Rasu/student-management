@@ -6,73 +6,73 @@ import TextField from "@mui/material/TextField";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import axios from "axios";
+// import axios from "axios";
 
 
 
 
-// const formVlidationSchema = yup.object({
-//   name: yup.string().max(15).required("Name is compulsory"),
-//   batch: yup.number().required("Batch is compulsory"),
-//   course: yup.string().required("Course is compulsory"),
-//   mentor : yup.string().max(15).required("Mentor is compulsory")
-// });
+const formVlidationSchema = yup.object({
+  Name: yup.string().max(15).required("Name is compulsory"),
+  Batch: yup.number().required("Batch is compulsory"),
+  Course: yup.string().required("Course is compulsory"),
+  Mentor : yup.string().max(15).required("Mentor is compulsory")
+});
 
 function Create() {
 
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
 
 
-  const handleSubmit =async(value)=>{
-        await axios.post("https://62ac315ebd0e5d29af1cc1c8.mockapi.io/students",value)
-        navigate("/")
+  // const handleSubmit =async(value)=>{
+  //       await axios.post("https://62ac315ebd0e5d29af1cc1c8.mockapi.io/students",value)
+  //       navigate("/")
+  // }
+
+
+
+  // const formik =useFormik({
+  //   initialValues:{
+  //       Name:"",
+  //       Batch:"",
+  //       Course:"",
+  //       Mentor:"",
+  //   },
+  //   validationSchema:yup.object({
+  //     Name: yup.string().max(15).required("Name is compulsory"),
+  //       Batch: yup.number().required("Batch is compulsory"),
+  //       Course: yup.string().required("Course is compulsory"),
+  //       Mentor : yup.string().max(15).required("Mentor is compulsory")
+      
+  //   }),
+  //   onSubmit:(values)=>{
+  //     console.log(values)
+  //     handleSubmit(values)
+  //   }
+  // })
+
+
+  const navigate = useNavigate();
+
+  const addData=(value)=>{
+    fetch(`https://62ac315ebd0e5d29af1cc1c8.mockapi.io/students`, {
+              method: "POST",
+              body: JSON.stringify(value),
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }).then((response) => response.json());
+
+            navigate("/");
   }
 
-
-
-  const formik =useFormik({
-    initialValues:{
-        Name:"",
-        Batch:"",
-        Course:"",
-        Mentor:"",
-    },
-    validationSchema:yup.object({
-      Name: yup.string().max(15).required("Name is compulsory"),
-        Batch: yup.number().required("Batch is compulsory"),
-        Course: yup.string().required("Course is compulsory"),
-        Mentor : yup.string().max(15).required("Mentor is compulsory")
-      
-    }),
-    onSubmit:(values)=>{
+  const formik = useFormik({
+    initialValues: { Name: "", Batch: "", Course: "", Mentor: "" },
+    validationSchema:formVlidationSchema,
+    onSubmit: (values) => {
       console.log(values)
-      handleSubmit(values)
-    }
-  })
-
-
-//   const navigate = useNavigate();
-
-//   const addData=(value)=>{
-//     fetch(`https://62ac315ebd0e5d29af1cc1c8.mockapi.io/students`, {
-//               method: "POST",
-//               body: JSON.stringify(value),
-//               headers: {
-//                 "Content-Type": "application/json",
-//               },
-//             }).then((response) => response.json());
-
-//             navigate("/");
-//   }
-
-//   const formik = useFormik({
-//     initialValues: { name: "", batch: "", course: "", mentor: "" },
-//     validationSchema:formVlidationSchema,
-//     onSubmit: (values) => {
-//       console.log(values)
-//       addData(values)
-//     },
-//   });
+      addData(values)
+    },
+  });
 
   return (
     <div>
