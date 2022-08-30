@@ -10,7 +10,7 @@ const formValidationSchema = yup.object({
 });
 
 function Formdemo() {
-    // the useformik hook takes objects, validation schema and handlesubmit
+  // the useformik hook takes objects, validation schema and handlesubmit
   const formik = useFormik({
     // declare the fields that needs formik access
     // the names given shoould be same to the name given in the fields
@@ -35,7 +35,7 @@ function Formdemo() {
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
       />
-      { formik.touched.email && formik.errors.email ? formik.errors.email : ""}
+      {formik.touched.email && formik.errors.email ? formik.errors.email : ""}
       <input
         type="password"
         name="password"
@@ -44,7 +44,9 @@ function Formdemo() {
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
       />
-      { formik.touched.password &&  formik.errors.password ? formik.errors.password : "" }
+      {formik.touched.password && formik.errors.password
+        ? formik.errors.password
+        : ""}
       <button type="submit">SUBMIT</button>
     </form>
   );

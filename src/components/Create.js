@@ -6,71 +6,35 @@ import TextField from "@mui/material/TextField";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { useFormik } from "formik";
 import * as yup from "yup";
-// import axios from "axios";
-
-
-
 
 const formVlidationSchema = yup.object({
   Name: yup.string().max(15).required("Name is compulsory"),
   Batch: yup.number().required("Batch is compulsory"),
   Course: yup.string().required("Course is compulsory"),
-  Mentor : yup.string().max(15).required("Mentor is compulsory")
+  Mentor: yup.string().max(15).required("Mentor is compulsory"),
 });
 
 function Create() {
-
-  // const navigate = useNavigate()
-
-
-  // const handleSubmit =async(value)=>{
-  //       await axios.post("https://62ac315ebd0e5d29af1cc1c8.mockapi.io/students",value)
-  //       navigate("/")
-  // }
-
-
-
-  // const formik =useFormik({
-  //   initialValues:{
-  //       Name:"",
-  //       Batch:"",
-  //       Course:"",
-  //       Mentor:"",
-  //   },
-  //   validationSchema:yup.object({
-  //     Name: yup.string().max(15).required("Name is compulsory"),
-  //       Batch: yup.number().required("Batch is compulsory"),
-  //       Course: yup.string().required("Course is compulsory"),
-  //       Mentor : yup.string().max(15).required("Mentor is compulsory")
-      
-  //   }),
-  //   onSubmit:(values)=>{
-  //     console.log(values)
-  //     handleSubmit(values)
-  //   }
-  // })
-
-
   const navigate = useNavigate();
 
-  const addData=(value)=>{
+  const addData = (value) => {
     fetch(`https://62ac315ebd0e5d29af1cc1c8.mockapi.io/students`, {
-              method: "POST",
-              body: JSON.stringify(value),
-              headers: {
-                "Content-Type": "application/json",
-              },
-            }).then((response) => response.json());
+      method: "POST",
+      body: JSON.stringify(value),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((response) => response.json());
 
-            navigate("/");
-  }
+    navigate("/");
+  };
 
   const formik = useFormik({
     initialValues: { Name: "", Batch: "", Course: "", Mentor: "" },
-    validationSchema:formVlidationSchema,
+    validationSchema: formVlidationSchema,
     onSubmit: (values) => {
-      console.log(values)
-      addData(values)
+      console.log(values);
+      addData(values);
     },
   });
 
@@ -87,9 +51,11 @@ function Create() {
           variant="outlined"
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          helperText= { formik.touched.Name && formik.errors.Name ? formik.errors.Name : ""}
+          helperText={
+            formik.touched.Name && formik.errors.Name ? formik.errors.Name : ""
+          }
         />
-        
+
         <br />
         <TextField
           value={formik.values.Batch}
@@ -99,9 +65,13 @@ function Create() {
           variant="outlined"
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          helperText=  { formik.touched.Batch && formik.errors.Batch ? formik.errors.Batch : ""}
+          helperText={
+            formik.touched.Batch && formik.errors.Batch
+              ? formik.errors.Batch
+              : ""
+          }
         />
-       
+
         <br />
         <TextField
           value={formik.values.Course}
@@ -111,9 +81,13 @@ function Create() {
           variant="outlined"
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          helperText= { formik.touched.Course && formik.errors.Course ? formik.errors.Course : ""}
+          helperText={
+            formik.touched.Course && formik.errors.Course
+              ? formik.errors.Course
+              : ""
+          }
         />
-        
+
         <br />
         <TextField
           value={formik.values.Mentor}
@@ -123,9 +97,13 @@ function Create() {
           variant="outlined"
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          helperText={ formik.touched.Mentor && formik.errors.Mentor ? formik.errors.Mentor : ""}
+          helperText={
+            formik.touched.Mentor && formik.errors.Mentor
+              ? formik.errors.Mentor
+              : ""
+          }
         />
-         
+
         <br />
 
         <Button

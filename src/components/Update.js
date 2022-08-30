@@ -5,16 +5,21 @@ import TextField from "@mui/material/TextField";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 
 function Update() {
- 
+
+  // setting up the initial values and next values that will change after input using usestate
+
   const [name, setName] = useState("");
   const [batch, setBatch] = useState("");
   const [course, setCourse] = useState("");
   const [mentor, setMentor] = useState("");
 
+  // getting the id in url using use params 
   const { ID } = useParams();
 
   const navigate = useNavigate();
 
+
+  // if id is present proceed to fetch and set the text field with the already given input
   useEffect(() => {
     if (ID)
       fetch(`https://62ac315ebd0e5d29af1cc1c8.mockapi.io/students/${ID}`)
@@ -30,13 +35,13 @@ function Update() {
   return (
     <div>
       <div className="inputs">
-      
         <TextField
+        // value displays the present data
           value={name}
           id="outlined-basic"
           label="NAME"
           variant="outlined"
-          required="Required"
+          // the input value is taken for every click
           onChange={(event) => setName(event.target.value)}
         />
         <br />
@@ -46,17 +51,15 @@ function Update() {
           id="outlined-basic"
           label="BATCH"
           variant="outlined"
-          required="Required"
           onChange={(event) => setBatch(event.target.value)}
         />
         <br />
-        
+
         <TextField
           value={course}
           id="outlined-basic"
           label="COURSE"
           variant="outlined"
-          required="Required"
           onChange={(event) => setCourse(event.target.value)}
         />
         <br />
@@ -65,7 +68,6 @@ function Update() {
           id="outlined-basic"
           label="MENTOR"
           variant="outlined"
-          required="Required"
           onChange={(event) => setMentor(event.target.value)}
         />
         <br />
@@ -74,20 +76,23 @@ function Update() {
           variant="contained"
           onClick={() => {
             fetch(
-              `https://62ac315ebd0e5d29af1cc1c8.mockapi.io/students/${ID}`,{
-                method:'PUT',
-                body:JSON.stringify({
-                  Name:name,
-                  Batch:batch,
-                  Course:course,
-                  Mentor:mentor
+              `https://62ac315ebd0e5d29af1cc1c8.mockapi.io/students/${ID}`,
+              {
+                method: "PUT",
+                // after click the input data gets added to the mock api
+                body: JSON.stringify({
+                  Name: name,
+                  Batch: batch,
+                  Course: course,
+                  Mentor: mentor,
                 }),
-                headers:{
-                  "Content-Type":"application/json",
+                headers: {
+                  "Content-Type": "application/json",
                 },
               }
-            ).then((response) => response.json())
-            .then((data)=>console.log(data))
+            )
+              .then((response) => response.json())
+              .then((data) => console.log(data));
 
             navigate("/");
           }}
