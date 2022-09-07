@@ -7,6 +7,8 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
+
+// yup object with validations
 const formVlidationSchema = yup.object({
   Name: yup.string().max(15).required("Name is compulsory"),
   Batch: yup.number().required("Batch is compulsory"),
@@ -17,10 +19,11 @@ const formVlidationSchema = yup.object({
 function Create() {
   const navigate = useNavigate();
 
-  const addData = (value) => {
+  // create operation
+  const addData = (values) => {
     fetch(`https://62ac315ebd0e5d29af1cc1c8.mockapi.io/students`, {
       method: "POST",
-      body: JSON.stringify(value),
+      body: JSON.stringify(values),
       headers: {
         "Content-Type": "application/json",
       },
@@ -29,10 +32,13 @@ function Create() {
     navigate("/");
   };
 
+  // formik object with initial values, valdation schema, onsubmit
   const formik = useFormik({
+    // all the values are capital because the api is given in capital
     initialValues: { Name: "", Batch: "", Course: "", Mentor: "" },
     validationSchema: formVlidationSchema,
     onSubmit: (values) => {
+      // onsubmit the input values goes to the api through create operation function
       console.log(values);
       addData(values);
     },
